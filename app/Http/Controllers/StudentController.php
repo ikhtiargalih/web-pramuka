@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Student;
+use App\Models\user;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class StudentController extends Controller
 {
@@ -18,6 +20,54 @@ class StudentController extends Controller
 
         return view('students.index',compact('students'))
             ->with('i', (request()->input('page', 1) - 1) *5);
+    }
+
+    public function home()
+    {
+        return view('index');
+    }
+
+    public function login()
+    {
+        return view('students.login');
+    }
+
+    public function register(Request $request)
+    {
+        // dd($request->all());
+        $request->validate([
+            'name' => 'required',
+            'username' => 'required',
+            'email' => 'required',
+            'password' => 'required'
+        ]);
+
+        user::create([
+            'name' => $request->name,
+            'username' => $request->username,
+            'email' => $request->email,
+            'password' => bcrypt($request->password)
+        ]);
+
+        return redirect('/login')->with('successRegister', 'Berhesil registrasi!');
+
+    }
+
+    public function auth(Request $request)
+    {
+        $request->validate([
+            'username' => 'required|exists:users,username',
+            'password' => 'required'
+        ], [
+            'username.exists' => 'username ini belum tersedia',
+            'username.required' => 'username harus diisi',
+            'password.required' => 'password harus diisi',
+        ]);
+
+        $user = $request->only('username', 'password');
+        if(Auth::attempt($user)){
+            return redirect('/')->with('successLogin', 'Berhasil login kamuhh!!');
+        }
     }
 
     /**

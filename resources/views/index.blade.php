@@ -52,7 +52,7 @@
           <li><a class="nav-link scrollto" href="#Achievement">Achievement</a></li>
           <li><a class="nav-link scrollto " href="#portfolio">Gallery</a></li>
           <li><a class="nav-link scrollto" href="#team">Team</a></li> 
-          <li><a class="nav-link scrollto" href="#login"><img src="https://img.icons8.com/fluency-systems-regular/20/null/enter-2.png"/>Login</a></li>
+          <li><a class="nav-link scrollto" href="{{ route('login') }}"><img src="https://img.icons8.com/fluency-systems-regular/20/null/enter-2.png"/>Login</a></li>
         </ul>   
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
